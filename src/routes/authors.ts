@@ -27,15 +27,15 @@ authors.post('/:id/books/:bookID', async (req, res) => {
 	}
 });
 
-// authors.get('/getAllAuthors', async (req, res) => {
-// 	try {
-// 		let authors = await Author.scope(req.query['scope']).findAll();
-// 		res.send(authors);
-// 	} catch (e) {
-// 		console.log(e);
-// 		res.status(404).send();
-// 	}
-// });
+authors.get('/getAllAuthors', async (req, res) => {
+	try {
+		let authors = await Author.scope().findAll();
+		res.send(authors);
+	} catch (e) {
+		console.log(e);
+		res.status(404).send();
+	}
+});
 
 authors.get('/:id', async (req, res) => {
 	try {
