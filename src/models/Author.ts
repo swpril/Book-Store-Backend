@@ -1,5 +1,23 @@
-import { Model, Table, Column } from 'sequelize-typescript';
+import {
+	Model,
+	Table,
+	Column,
+	Scopes,
+	BelongsToMany,
+} from 'sequelize-typescript';
+import { Book } from './Book';
+import { BookAuthor } from './BookAuthor';
 
+@Scopes(() => ({
+	books: {
+		include: [
+			{
+				model: Book,
+				through: { attributes: [] },
+			},
+		],
+	},
+}))
 @Table
 export class Author extends Model<Author> {
 	@Column
@@ -10,4 +28,7 @@ export class Author extends Model<Author> {
 
 	@Column
 	nationality!: string;
+
+	@BelongsToMany(() => Book, () => BookAuthor)
+	books?: Book[];
 }
