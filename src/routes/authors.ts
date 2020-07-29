@@ -29,7 +29,7 @@ authors.post('/:id/books/:bookID', async (req, res) => {
 
 authors.get('/getAllAuthors', async (req, res) => {
 	try {
-		let authors = await Author.scope().findAll();
+		let authors = await Author.scope('books').findAll();
 		res.send(authors);
 	} catch (e) {
 		console.log(e);
@@ -39,7 +39,7 @@ authors.get('/getAllAuthors', async (req, res) => {
 
 authors.get('/:id', async (req, res) => {
 	try {
-		const author = await Author.scope().findByPk(req.params['id']);
+		const author = await Author.scope('books').findByPk(req.params['id']);
 		res.send(author);
 	} catch (e) {
 		console.log(e);
