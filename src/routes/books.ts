@@ -16,6 +16,7 @@ books.post('/addBook', async (req, res) => {
 books.get('/getAllBooks', async (req, res) => {
 	try {
 		const books = await Book.scope('authors').findAll();
+		if (books.length < 1) throw new Error();
 		res.send(books);
 	} catch (e) {
 		console.log(e);
@@ -26,6 +27,7 @@ books.get('/getAllBooks', async (req, res) => {
 books.get('/:id', async (req, res) => {
 	try {
 		const book = await Book.scope('authors').findByPk(req.params['id']);
+		if (!book) throw new Error();
 		res.send(book);
 	} catch (e) {
 		console.log(e);
