@@ -25,7 +25,7 @@ test('Should get author by id', async () => {
 });
 
 test('Should not get author by random id', async () => {
-	await request(app).get('/authors/3').expect(400);
+	await request(app).get('/authors/3').expect(404);
 });
 
 test('Should link author ID with book ID', async () => {
