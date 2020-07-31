@@ -1,6 +1,23 @@
 import request from 'supertest';
 import { app } from '../app';
+import { sequelize } from '../sequelize';
+import { Author } from '../models/Author';
+import { Book } from '../models/Book';
 
+beforeAll(async () => {
+	await sequelize.sync({ force: true });
+	await Author.create({
+		name: 'Paulo Coelho',
+		birthYear: '1967',
+		nationality: 'Brazilian',
+	});
+	await Book.create({
+		title: 'The Alchemist',
+		publicationYear: 2011,
+		language: 'English',
+		subject: 'Romance',
+	});
+});
 test('Should add a new author', async () => {
 	await request(app)
 		.post('/authors/newAuthor')
@@ -16,16 +33,12 @@ test('Should get all authors', async () => {
 	await request(app).get('/authors/getAllAuthors').expect(200);
 });
 
-test('Should not get all authors if author does not exist', async () => {
-	await request(app).get('/authors/getAllAuthors').expect(404);
-});
-
 test('Should get author by id', async () => {
 	await request(app).get('/authors/1').expect(200);
 });
 
 test('Should not get author by random id', async () => {
-	await request(app).get('/authors/3').expect(400);
+	await request(app).get('/authors/3').expect(404);
 });
 
 test('Should link author ID with book ID', async () => {
@@ -34,4 +47,9 @@ test('Should link author ID with book ID', async () => {
 
 test('Should not link author ID with book ID if not exists', async () => {
 	await request(app).post('/authors/3/books/5').expect(400);
+});
+
+test('Should not get all authors if author does not exist', async () => {
+	await Author.destroy({ where: {}, truncate: true });
+	await request(app).get('/authors/getAllAuthors').expect(404);
 });

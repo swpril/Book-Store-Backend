@@ -9,7 +9,6 @@ authors.post('/newAuthor', async (req, res) => {
 		const author = await Author.create(req.body);
 		res.status(201).send(author);
 	} catch (e) {
-		console.log(e);
 		res.status(400).send();
 	}
 });
@@ -22,7 +21,6 @@ authors.post('/:id/books/:bookID', async (req, res) => {
 		});
 		res.send(200);
 	} catch (e) {
-		console.log(e);
 		res.status(400).send();
 	}
 });
@@ -33,7 +31,6 @@ authors.get('/getAllAuthors', async (req, res) => {
 		if (authors.length < 1) throw new Error();
 		res.send(authors);
 	} catch (e) {
-		console.log(e);
 		res.status(404).send();
 	}
 });
@@ -44,7 +41,6 @@ authors.get('/:id', async (req, res) => {
 		if (!author) throw new Error();
 		res.send(author);
 	} catch (e) {
-		console.log(e);
 		res.status(404).send();
 	}
 });

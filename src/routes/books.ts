@@ -8,7 +8,6 @@ books.post('/addBook', async (req, res) => {
 		const book = await Book.create(req.body);
 		res.status(201).send(book);
 	} catch (e) {
-		console.log(e);
 		res.status(400).send();
 	}
 });
@@ -19,7 +18,6 @@ books.get('/getAllBooks', async (req, res) => {
 		if (books.length < 1) throw new Error();
 		res.send(books);
 	} catch (e) {
-		console.log(e);
 		res.status(404).send();
 	}
 });
@@ -30,7 +28,6 @@ books.get('/:id', async (req, res) => {
 		if (!book) throw new Error();
 		res.send(book);
 	} catch (e) {
-		console.log(e);
 		res.status(404).send();
 	}
 });

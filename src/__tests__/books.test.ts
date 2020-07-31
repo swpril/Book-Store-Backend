@@ -1,6 +1,10 @@
 import request from 'supertest';
 import { app } from '../app';
+import { sequelize } from '../sequelize';
 
+beforeAll(async () => {
+	await sequelize.sync({ force: true });
+});
 test('Shoud add a new book', async () => {
 	await request(app)
 		.post('/books/addBook')

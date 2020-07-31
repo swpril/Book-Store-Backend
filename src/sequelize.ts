@@ -5,4 +5,5 @@ export const sequelize = new Sequelize({
 	database: 'books',
 	storage: ':memory:',
 	models: [__dirname + '/models'],
+	logging: false,
 });
