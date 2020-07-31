@@ -8,6 +8,7 @@ import { sequelize } from './sequelize';
 const app = express();
 
 (async function () {
+	await sequelize.authenticate();
 	await sequelize.sync({ force: true });
 })();
 
